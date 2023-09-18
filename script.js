@@ -11,6 +11,8 @@ const btnNext = document.getElementById("btn-next");
 const btnPrev = document.getElementById("btn-prev");
 const btnFirst = document.getElementById("btn-first");
 const btnLast = document.getElementById("btn-last");
+const pageInput = document.getElementById("page-input");
+const goToPageButton = document.getElementById("go-to-page");
 //filtros
 const btnAll = document.getElementById("list-all");
 const btnWomen = document.getElementById("list-women");
@@ -19,7 +21,9 @@ const btnGenderless = document.getElementById("list-genderless");
 const btnUnknown = document.getElementById("list-unknown");
 
 // Primero hago un fetch para traer la info de la api. Creo la funcion para 
-// guardar la info. Despues sumo tambien la funcion de la paginacion
+// guardar la info. Despues sumo tambien la funcion de la paginacion y para
+// el nav, le saco la propiedad para ocultarlo ya que lo quiero ocultar
+//cuando muestro la card de cada personaje
 
 const getInfoCharacters = (pageNumber) => {
   container.innerHTML = "";
@@ -30,9 +34,7 @@ const getInfoCharacters = (pageNumber) => {
       totalPages = data.info.pages;
       updatePaginationInfo();
     })
-
     document.querySelector('nav').classList.remove('hidden');
-
 }
 
 getInfoCharacters(currentPage);
@@ -149,22 +151,17 @@ const updatePaginationInfo = () => {
 
 updatePaginationInfo();
 
-const pageInput = document.getElementById("page-input");
-const goToPageButton = document.getElementById("go-to-page");
-
 // Creo una funcion para que el usuario seleccione un numero de pagina "X"
 //y lo redirija a ese numero de pagina
 
 goToPageButton.addEventListener("click", () => {
-  const pageNumber = parseInt(pageInput.value, 10);
+  const pageNumber = parseInt(pageInput.value);
   if (pageNumber >= 1 && pageNumber <= totalPages) {
     currentPage = pageNumber;
     updatePaginationInfo();
     getInfoCharacters(currentPage);
     pageInput.value = ""; 
-  } else {
-    alert("Número de página inválido. Ingrese un número válido.");
-  }
+  } 
 });
 
 // Comienzo con los filtros

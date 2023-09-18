@@ -33,8 +33,8 @@ header{
 .logo {
   width: 300px;
   height: 200px;
-  max-width: 600px;
-  max-height: 400px;
+  max-width: 1000px;
+  max-height: 800px;
   margin: 10px;
 }
 
@@ -175,6 +175,12 @@ p {
   margin-top: 5px;
 }
 
+.character-card h2,
+h3,
+ul {
+  color: white;
+}
+
 .card h2 {
   text-align: center;
 }
@@ -182,12 +188,6 @@ p {
 .card button {
   display: block;
   align-items: center;
-}
-
-.character-card h2,
-h3,
-ul {
-  color: white;
 }
 
 .container__pagination {
@@ -198,6 +198,10 @@ ul {
   align-items: center;
   text-align: center;
   gap: 15px;
+}
+
+.container__pagination p{
+  font-size: 0.9rem;
 }
 
 .pagination {
@@ -215,7 +219,7 @@ input {
   font-size: 0.9rem;
   font-weight: 600;
   text-align: center;
-  width: 100px;
+  width: 125px;
   height: 30px;
   border: none;
   border: 2px solid #f5f760;
@@ -225,10 +229,6 @@ input {
   box-sizing: border-box;
   background-color: #a7cb543d;
   margin-top: 5px;
-}
-
-.container__pagination input {
-  width: 125px;
 }
 
 .footer {
@@ -314,15 +314,15 @@ input {
     height: 35px;
   }
 
+  .container__pagination p{
+    font-size: 1.2rem;
+  }
+
   .container__pagination button,
   input {
     font-size: 1.2rem;
-    width: 130px;
-    height: 35px;
-  }
-
-  .container__pagination input {
     width: 160px;
+    height: 35px;
   }
 
   .footer__socialmedia i {
@@ -342,10 +342,78 @@ input {
     height: 400px;
   }
 
+  .title {
+    font-size: 1.8rem;
+  }
+
+  ul li button {
+    font-size: 1.3rem;
+    width: 130px;
+    height: 35px;
+  }
+
   .container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+  }
+
+  .container__pagination p{
+    font-size: 1.3rem;
+  }
+
+  .container__pagination button, input {
+    font-size: 1.3rem;
+    width: 180px;
+    height: 40px;
+  }
+
+  .footer__socialmedia i {
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+
+  .footer__socialmedia i:hover {
+      transform: scale(1.2);
+    }
+
+    .footer__copyright p {
+      font-size: 1.5rem;
+    }
+  }
+
+
+/* Agrego el tercer breakpoint para wide screen en 1025 */
+
+@media (min-width: 1025px) and (max-width: 1899px){
+
+  .logo {
+    width: 900px;
+    height: 700px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  ul li button {
+    font-size: 2rem;
+    width: 180px;
+    height: 70px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .container__pagination p{
+    font-size: 1.7rem;
+  }
+
+  .container__pagination input {
+    width: 180px;
   }
 
   .container__pagination button {
@@ -354,28 +422,9 @@ input {
     height: 40px;
   }
 
-  .container__pagination input {
-    width: 180px;
-
   .footer__socialmedia i {
-      font-size: 2.3rem;
-      cursor: pointer;
-    }
-
-  .footer__socialmedia i:hover {
-      transform: scale(1.2);
-    }
-  }
-}
-
-/* Agrego el tercer breakpoint para wide screen en 1025 */
-
-@media (min-width: 1025px) and (max-width: 2400px){
-
-  .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    font-size: 3.5rem;
+    cursor: pointer;
   }
 
   .footer__socialmedia i:hover{
@@ -384,10 +433,76 @@ input {
   }
 
   .footer__copyright p {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 
   .footer__copyright--heart {
     width: 22px;
   }
 }
+
+@media (min-width: 1900px){
+
+  .logo {
+    width: 1000px;
+    height: 800px;
+  }
+
+  .title {
+    color: #fff;
+    font-size: 3rem;
+    text-align: center;
+    margin: 20px;
+  }
+
+  ul li button {
+    font-size: 2rem;
+    width: 180px;
+    height: 70px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .container__pagination p{
+    font-size: 2.5rem;
+  }
+
+  .container__pagination input {
+    width: 260px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .container__pagination button {
+    font-size: 2rem;
+    width: 200px;
+    height: 60px;
+  }
+
+  .footer__socialmedia i {
+    font-size: 4.5rem;
+    cursor: pointer;
+  }
+
+  .footer__socialmedia i:hover{
+    transform: scale(1.2);
+    color: #9f86c0;
+  }
+
+  .footer__copyright p {
+    font-size: 4rem;
+  }
+
+  .footer__copyright--heart {
+    width: 50px;
+  }
+}
+
+ 
+
+  
+
