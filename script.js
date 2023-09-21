@@ -102,9 +102,7 @@ btnPrev.addEventListener("click", () => {
     currentPage--;
     getInfoCharacters(currentPage, currentGender);
     btnNext.removeAttribute("disabled");
-  }
-
-  if (currentPage === 1) {
+  } else {
     btnPrev.setAttribute("disabled", true);
   }
 });
