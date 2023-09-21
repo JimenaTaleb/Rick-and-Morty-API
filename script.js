@@ -33,6 +33,7 @@ const getInfoCharacters = (pageNumber, gender = "") => {
       totalPages = data.info.pages;
       updatePaginationInfo();
     })
+    document.querySelector('nav').classList.remove('hidden');
 }
 
 getInfoCharacters(currentPage, currentGender);
