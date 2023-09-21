@@ -6,6 +6,7 @@ const countPage = document.getElementById("count-actual-page");
 const totalPage = document.getElementById("total-pages");
 let currentPage = 1;
 let totalPages = 0;
+let currentGender = "";
 //paginacion
 const btnNext = document.getElementById("btn-next");
 const btnPrev = document.getElementById("btn-prev");
@@ -21,29 +22,26 @@ const btnGenderless = document.getElementById("list-genderless");
 const btnUnknown = document.getElementById("list-unknown");
 
 // Primero hago un fetch para traer la info de la api. Creo la funcion para 
-// guardar la info. Despues sumo tambien la funcion de la paginacion y para
-// el nav, le saco la propiedad para ocultarlo ya que lo quiero ocultar
-//cuando muestro la card de cada personaje
+// guardar la info. Despues sumo tambien la funcion de la paginacion y genero
 
-const getInfoCharacters = (pageNumber) => {
+const getInfoCharacters = (pageNumber, gender = "") => {
   container.innerHTML = "";
-  fetch(`https://rickandmortyapi.com/api/character?page=${pageNumber}`)
+  fetch(`https://rickandmortyapi.com/api/character?page=${pageNumber}&gender=${gender}`)
     .then((res) => res.json())
     .then((data) => {
-      renderInfoCharacters(data)
+      renderInfoCharacters(data.results)
       totalPages = data.info.pages;
       updatePaginationInfo();
     })
-    document.querySelector('nav').classList.remove('hidden');
 }
 
-getInfoCharacters(currentPage);
+getInfoCharacters(currentPage, currentGender);
 
 // creo la funcion y hago un foreach para que renderice cada personaje.
 
-const renderInfoCharacters = (data) => {
-  container.innerHTML = "";
-  data.results.forEach((character) => {
+const renderInfoCharacters = (characters) => {
+  // container.innerHTML = "";
+  characters.forEach((character) => {
     container.innerHTML += `<div class="character-card">
     <h2>${character.name}</h2>
     <img src="${character.image}" alt="personaje" />
@@ -89,35 +87,20 @@ const getCardDetail = (characterUrl) => {
 // Creo un evento para avanzar a la siguiente pagina
 
 btnNext.addEventListener("click", () => {
-  if (currentPage <= 1){
+  if (currentPage < totalPages) {
     currentPage++;
-  } else if (currentPage > 1 && currentPage < totalPages){
-    btnPrev.removeAttribute("disabled", false)
-    currentPage++;
+    getInfoCharacters(currentPage, currentGender);
   }
-  else {
-    btnNext.setAttribute("disabled", true)
-  }
-
-  getInfoCharacters(currentPage);
 });
 
 
 // Creo un evento para regresar a la pagina anterior
 
 btnPrev.addEventListener("click", () => {
-  if (currentPage <= 1){
-    btnPrev.setAttribute("disabled", true)
-  } else if (currentPage > 1 && currentPage <= totalPages){
+  if (currentPage > 1) {
     currentPage--;
-    btnNext.removeAttribute("disabled", true)
+    getInfoCharacters(currentPage, currentGender);
   }
-  else {
-    btnNext.setAttribute("disabled", true)
-    currentPage--;
-  }
-
-  getInfoCharacters(currentPage);
 });
 
 
@@ -125,18 +108,16 @@ btnPrev.addEventListener("click", () => {
 
 btnFirst.addEventListener("click", () => {
   currentPage = 1;
+  getInfoCharacters(currentPage, currentGender);
   btnPrev.setAttribute("disabled", true);
-  btnNext.removeAttribute("disabled");
-  getInfoCharacters(currentPage);
 });
 
 // Creo un evento para ir a la ultima pagina
 
 btnLast.addEventListener("click", () => {
   currentPage = totalPages;
+  getInfoCharacters(currentPage, currentGender);
   btnNext.setAttribute("disabled", true);
-  btnPrev.removeAttribute("disabled");
-  getInfoCharacters(currentPage);
 });
 
 
@@ -149,8 +130,6 @@ const updatePaginationInfo = () => {
 };
 
 
-updatePaginationInfo();
-
 // Creo una funcion para que el usuario seleccione un numero de pagina "X"
 //y lo redirija a ese numero de pagina
 
@@ -159,77 +138,40 @@ goToPageButton.addEventListener("click", () => {
   if (pageNumber >= 1 && pageNumber <= totalPages) {
     currentPage = pageNumber;
     updatePaginationInfo();
-    getInfoCharacters(currentPage);
-    pageInput.value = ""; 
-  } 
+    getInfoCharacters(currentPage, currentGender);
+    pageInput.value = "";
+  }
 });
 
 // Comienzo con los filtros
-
-// Creo una función con un fetch para poder filtrar paginas y generos con los query params
-const getInfoCharactersWithGender = (pageNumber, gender) => {
-  container.innerHTML = "";
-  fetch(`https://rickandmortyapi.com/api/character?page=${pageNumber}&gender=${gender}`)
-    .then((res) => res.json())
-    .then((data) => {
-      renderInfoCharacters(data);
-      totalPages = data.info.pages;
-      updatePaginationInfo();
-    });
-};
 
 // Creo los eventos para aplicar los filtros de genero (todos, mujeres, hombres, sin genero
 // y desconocido)
 
 btnAll.addEventListener("click", () => {
-  getInfoCharactersWithGender(currentPage, currentGender);
+  currentGender = "";
+  getInfoCharacters(currentPage, currentGender);
 });
 
 btnWomen.addEventListener("click", () => {
-  currentGender = "female"; 
-  getInfoCharactersWithGender(currentPage, currentGender);
+  currentGender = "female";
+  getInfoCharacters(currentPage, currentGender);
 });
 
 btnMen.addEventListener("click", () => {
-  currentGender = "male"; 
-  getInfoCharactersWithGender(currentPage, currentGender);
+  currentGender = "male";
+  getInfoCharacters(currentPage, currentGender);
 });
 
 btnGenderless.addEventListener("click", () => {
-  currentGender = "genderless"; 
-  getInfoCharactersWithGender(currentPage, currentGender);
+  currentGender = "genderless";
+  getInfoCharacters(currentPage, currentGender);
 });
 
 btnUnknown.addEventListener("click", () => {
-  currentGender = "unknown"; 
-  getInfoCharactersWithGender(currentPage, currentGender);
+  currentGender = "unknown";
+  getInfoCharacters(currentPage, currentGender);
 });
-
-// Creo otros eventos para los botones de paginacion y que funcionen con los filtros
-btnNext.addEventListener("click", () => {
-  if (currentPage < totalPages) {
-    currentPage++;
-    getInfoCharactersWithGender(currentPage, currentGender);
-  }
-});
-
-btnPrev.addEventListener("click", () => {
-  if (currentPage > 1) {
-    currentPage--;
-    getInfoCharactersWithGender(currentPage, currentGender);
-  }
-});
-
-btnFirst.addEventListener("click", () => {
-  currentPage = 1;
-  getInfoCharactersWithGender(currentPage, currentGender);
-});
-
-btnLast.addEventListener("click", () => {
-  currentPage = totalPages;
-  getInfoCharactersWithGender(currentPage, currentGender);
-});
-
 
 
 
