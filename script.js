@@ -96,17 +96,21 @@ btnNext.addEventListener("click", () => {
 
 
 // Creo un evento para regresar a la pagina anterior
-
 btnPrev.addEventListener("click", () => {
-  if (currentPage > 1) {
+  if (currentPage <= 1){
+    btnPrev.setAttribute("disabled", true)
+  } else if (currentPage > 1 && currentPage <= totalPages){
     currentPage--;
-    getInfoCharacters(currentPage, currentGender);
-    btnNext.removeAttribute("disabled");
-  } else {
-    btnPrev.setAttribute("disabled", true);
+    btnNext.removeAttribute("disabled", true)
+    btnPrev.removeAttribute("disabled", true)
   }
-});
+  else {
+    btnNext.setAttribute("disabled", true)
+    currentPage--;
+  }
 
+  getInfoCharacters(currentPage, currentGender);
+});
 
 // Creo un evento para ir a la primera pagina
 
