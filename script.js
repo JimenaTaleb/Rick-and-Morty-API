@@ -88,21 +88,25 @@ const getCardDetail = (characterUrl) => {
 // Creo un evento para avanzar a la siguiente pagina
 
 btnNext.addEventListener("click", () => {
-  if (currentPage < totalPages) {
+  if (currentPage <= 1){
     currentPage++;
-    getInfoCharacters(currentPage, currentGender);
+  } else if (currentPage > 1 &&  currentPage < totalPages){
+    btnPrev.removeAttribute("disabled", true)
+    currentPage++;
+  } else {
+    btnNext.setAttribute("disabled", true)
   }
+    
+    getInfoCharacters(currentPage, currentGender);
+
 });
 
 
 // Creo un evento para regresar a la pagina anterior
 btnPrev.addEventListener("click", () => {
-  if (currentPage <= 1){
-    btnPrev.setAttribute("disabled", true)
-  } else if (currentPage > 1 && currentPage <= totalPages){
+ if (currentPage > 1 && currentPage <= totalPages){
     currentPage--;
     btnNext.removeAttribute("disabled", true)
-    btnPrev.removeAttribute("disabled", true)
   }
   else {
     btnNext.setAttribute("disabled", true)
